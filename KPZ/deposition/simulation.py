@@ -42,8 +42,14 @@ class Board(object):
         ### add pieces with some probability
         ### check for collisions with new pieces?
         for _ in range(number):
-            coord = (0,random.randrange(0, self._size[1]-2))
-            self._pieces.append(self._piece_factory.create_4b1_block(coord))
+            coord = (0,random.randrange(0, self._size[1]-3))
+            case = random.randint(0,2)
+            if case == 0: 
+                self._pieces.append(self._piece_factory.create_2b1_block(coord))
+            elif case == 1:
+                self._pieces.append(self._piece_factory.create_3b1_block(coord))
+            else:
+                self._pieces.append(self._piece_factory.create_4b1_block(coord))
 
     def check_collision(self, piece):
         ### also check for OOB but should be OK
