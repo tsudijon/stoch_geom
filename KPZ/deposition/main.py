@@ -10,8 +10,9 @@ if __name__ == "__main__":
     pygame.init()
 
     # Define some colors
-
-    size = (2000, 500)
+    box_size = 5
+    game_size = (100,200)
+    size = ((game_size[1])*box_size, (game_size[0])*box_size)
     screen = pygame.display.set_mode(size)
 
     pygame.display.set_caption("Tetris")
@@ -19,8 +20,8 @@ if __name__ == "__main__":
     # Loop until the user clicks the close button.
     done = False
     clock = pygame.time.Clock()
-    fps = 25
-    game = Board(size = (1000,30))
+    fps = 10000
+    game = Board(game_size)
     counter = 0
 
     pressing_down = False
@@ -30,8 +31,7 @@ if __name__ == "__main__":
         if counter > 100000:
             counter = 0
 
-        if counter % (fps // 2) == 0 or pressing_down:
-            game.update()
+        game.update()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -61,18 +61,18 @@ if __name__ == "__main__":
         #     for j in range(game._size[0]):
         #         pygame.draw.rect(screen, WHITE, [game.x + game.zoom * j, game.y + game.zoom * i, game.zoom, game.zoom], 1)
 
-        box_size = 5
+
         ### draw dead squares
         for coord in game._used_indices:
             pygame.draw.rect(screen, GRAY,
-                            [coord[0], coord[1], box_size, box_size])           
+                            [box_size*coord[1], box_size*coord[0], box_size, box_size])           
 
         ### draw current shapes
         for piece in game._pieces:
             for coord in piece.get_indices():
                 pygame.draw.rect(screen, piece.color,
-                                [coord[0],
-                                coord[1],
+                                [box_size* coord[1],
+                                box_size* coord[0],
                                 box_size,
                                 box_size])                   
 

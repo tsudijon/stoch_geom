@@ -4,12 +4,11 @@ import random
 import pygame
 
 class Board(object):
-    def __init__(self, size = (500,10)):
+    def __init__(self, size = (500,20)):
         self._size = size
         self._pieces = []
         self._board = np.zeros(size)
         self._used_indices = set() 
-        self.zoom = 20
 
         self._piece_factory = PieceMaker()
 
@@ -21,6 +20,7 @@ class Board(object):
     def update(self):
         self.move_board()
         self.initialize_piece()      
+        print(len(self._pieces))
 
         
     def move_board(self):
@@ -34,6 +34,7 @@ class Board(object):
                 piece.move_down()
 
 
+
     def initialize_piece(self):
         ### add pieces with some probability
         ### check for collisions with new pieces?
@@ -43,12 +44,14 @@ class Board(object):
     def check_collision(self, piece):
         ### also check for OOB but should be OK
         if not self._check_in_bounds(piece.get_indices('down')):
+            print("Out of bounds")
             return False
 
-        if self._used_indices.intersection(piece.get_indices('down')):
-            return False
-        else:
+        if len(self._used_indices.intersection(piece.get_indices('down'))):
+            #print("intersection" + self._used_indices.intersection(piece.get_indices('down')))
             return True
+        else:
+            return False
         ###
 
     def _check_in_bounds(self, piece):
