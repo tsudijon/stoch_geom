@@ -1,4 +1,5 @@
 import random
+from constants import *
 
 class PieceMaker(object):
     def __init__(self):
@@ -17,6 +18,7 @@ class PieceMaker(object):
 class Piece(object):
     def __init__(self, coords):
         self._indices = coords
+        self.color = RED
          
 
     def move_down(self):

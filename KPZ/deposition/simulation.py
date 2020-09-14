@@ -1,14 +1,15 @@
 import numpy as np
 from pieces import Piece, PieceMaker
 import random
-
+import pygame
 
 class Board(object):
-    def __init__(self, size = (1000,20)):
+    def __init__(self, size = (500,10)):
         self._size = size
         self._pieces = []
         self._board = np.zeros(size)
         self._used_indices = set() 
+        self.zoom = 20
 
         self._piece_factory = PieceMaker()
 
@@ -19,8 +20,7 @@ class Board(object):
         
     def update(self):
         self.move_board()
-        self.initialize_piece()
-        self.draw()
+        self.initialize_piece()      
 
         
     def move_board(self):
@@ -33,7 +33,6 @@ class Board(object):
             else:
                 piece.move_down()
 
-        pass 
 
     def initialize_piece(self):
         ### add pieces with some probability
@@ -43,7 +42,7 @@ class Board(object):
 
     def check_collision(self, piece):
         ### also check for OOB but should be OK
-        if not self._check_in_bounds(piece):
+        if not self._check_in_bounds(piece.get_indices('down')):
             return False
 
         if self._used_indices.intersection(piece.get_indices('down')):
@@ -60,8 +59,7 @@ class Board(object):
     ### drawing functions ###
     #########################
 
-    def draw(self):
-        pass
+
 
 
 if __name__ == "__main__":
