@@ -7,12 +7,13 @@ class Board(object):
     def __init__(self, size = (500,20)):
         self._size = size
         self._pieces = []
-        self._board = np.zeros(size)
+        self._used_board = np.zeros(size)
         self._used_indices = set() 
 
         self._piece_factory = PieceMaker()
 
         #### set the bottom row to be used
+        self._used_board[-1,:] = 1
         for i in range(self._size[1]):
             self._used_indices.add((self._size[0]-1,i))
         
@@ -29,17 +30,20 @@ class Board(object):
         for piece in self._pieces:
             if self.check_collision(piece):
                 self._used_indices = self._used_indices.union(piece.get_indices())
+                for index in piece.get_indices():
+                    self._used_board[index] = 1
                 self._pieces.remove(piece)
             else:
                 piece.move_down()
 
 
 
-    def initialize_piece(self):
+    def initialize_piece(self, number = 5):
         ### add pieces with some probability
         ### check for collisions with new pieces?
-        coord = (0,random.randrange(0, self._size[1]-2))
-        self._pieces.append(self._piece_factory.create_3b1_block(coord))
+        for _ in range(number):
+            coord = (0,random.randrange(0, self._size[1]-2))
+            self._pieces.append(self._piece_factory.create_4b1_block(coord))
 
     def check_collision(self, piece):
         ### also check for OOB but should be OK
@@ -58,6 +62,8 @@ class Board(object):
         ### TODO: not implemented yet
         return True    
 
+    def get_interface(self):
+        return np.argmax(self._used_board,axis = 0)
     #########################
     ### drawing functions ###
     #########################

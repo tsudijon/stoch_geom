@@ -10,8 +10,8 @@ if __name__ == "__main__":
     pygame.init()
 
     # Define some colors
-    box_size = 5
-    game_size = (100,200)
+    box_size = 2
+    game_size = (200,600)
     size = ((game_size[1])*box_size, (game_size[0])*box_size)
     screen = pygame.display.set_mode(size)
 
@@ -20,7 +20,7 @@ if __name__ == "__main__":
     # Loop until the user clicks the close button.
     done = False
     clock = pygame.time.Clock()
-    fps = 10000
+    fps = 10000000
     game = Board(game_size)
     counter = 0
 
@@ -76,6 +76,13 @@ if __name__ == "__main__":
                                 box_size,
                                 box_size])                   
 
+        ### draw interface
+        for i,idx in enumerate(game.get_interface()):
+            pygame.draw.rect(screen, BLUE,
+                            [box_size* i,
+                            box_size* idx,
+                            box_size,
+                            2*box_size])             
 
         font = pygame.font.SysFont('Calibri', 25, True, False)
         font1 = pygame.font.SysFont('Calibri', 65, True, False)

@@ -25,6 +25,14 @@ class PieceMaker(object):
                      ])
         return Piece(coords)
 
+    def create_4b1_block(self, coord):
+        coords = set([coord,
+                     add_tup(coord, (0,1)),
+                     add_tup(coord, (0,2)),
+                     add_tup(coord, (0,3))
+                     ])
+        return Piece(coords)
+
 
 class Piece(object):
     def __init__(self, coords):
