@@ -38,8 +38,8 @@ class Board(object):
     def initialize_piece(self):
         ### add pieces with some probability
         ### check for collisions with new pieces?
-        coord = (0,random.randrange(0, self._size[1]-1))
-        self._pieces.append(self._piece_factory.create_2b1_block(coord))
+        coord = (0,random.randrange(0, self._size[1]-2))
+        self._pieces.append(self._piece_factory.create_3b1_block(coord))
 
     def check_collision(self, piece):
         ### also check for OOB but should be OK

@@ -15,7 +15,7 @@ if __name__ == "__main__":
     size = ((game_size[1])*box_size, (game_size[0])*box_size)
     screen = pygame.display.set_mode(size)
 
-    pygame.display.set_caption("Tetris")
+    pygame.display.set_caption("Tetris Deposition Model")
 
     # Loop until the user clicks the close button.
     done = False
